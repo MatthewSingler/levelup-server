@@ -1,0 +1,26 @@
+[
+    {
+        "model": "levelupapi.event",
+        "pk": 1,
+        "fields": {
+            "game": 2,
+            "description": "The best golf game ever",
+            "date": "2021-11-4",
+            "time": "07:00:00",
+            "organizer": 1,
+            "attendees": [1]
+        }
+    },
+    {
+        "model": "levelupapi.event",
+        "pk": 2,
+        "fields": {
+            "game": 1,
+            "description": "You cant fail",
+            "date": "2021-11-7",
+            "time": "07:00:00",
+            "organizer": 3,
+            "attendees": [1, 2, 3]
+        }
+    }
+]

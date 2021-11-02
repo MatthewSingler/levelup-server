@@ -1,0 +1,26 @@
+[
+    {
+        "model": "levelupapi.game",
+        "pk": 1,
+        "fields": {
+            "game_type": 3,
+            "title": "Test Yourself",
+            "maker": "Blamo",
+            "gamer": 1,
+            "number_of_players": 2,
+            "skill_level": 3
+        }
+    },
+    {
+        "model": "levelupapi.game",
+        "pk": 2,
+        "fields": {
+            "game_type": 2,
+            "title": "Auditor",
+            "maker": "USA",
+            "gamer": 1,
+            "number_of_players": 1,
+            "skill_level": 5
+        }
+    }
+]
