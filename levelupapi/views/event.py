@@ -9,11 +9,10 @@ from django.core.exceptions import ValidationError
 
 
 class EventView(ViewSet):
-    """Level up events"""
 
     def list(self, request):
         events = Event.objects.all()
-        game = self.request.query_params.get("game")
+        game = self.request.query_params.get("game", None)
         gamer = Gamer.objects.get(user=request.auth.user)
         if game is not None:
             events = events.filter(game__id=game)
