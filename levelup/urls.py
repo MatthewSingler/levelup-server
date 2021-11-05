@@ -1,5 +1,4 @@
 from rest_framework import routers
-from levelupapi.views import GameTypeView
 from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
