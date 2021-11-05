@@ -39,6 +39,20 @@ class EventView(ViewSet):
         except ValidationError as ex:
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
+"""def retrieve(self, request, pk=None)
+    event = Event.objects.get(pk=pk)
+    event_serializer = EventSerializer(event, context={"request": request})
+    return Response(event_serializer.data)
+
+def destroy(self, request, pk)
+    event = Event.objects.get(pk=pk)
+    event.delete()
+
+def update(self, request, pk)
+    event = Event.objects.get(pk=pk)
+    event.date = request.data["date"]
+    """
+
 
 class EventGamerSerializer(serializers.ModelSerializer):
 
