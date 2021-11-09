@@ -2,7 +2,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
-from levelupapi.models import Event, EventGamer, event_gamer, Game, Gamer, gamer
+from levelupapi.models import Event, EventGamer, event_gamer, Game, Gamer
 from levelupapi.views.game import GameSerializer
 from rest_framework import status
 from django.core.exceptions import ValidationError
@@ -22,8 +22,8 @@ class EventView(ViewSet):
         return Response(serializer.data)
     
     def create(self, request):
-        event = Event.objects.get(user=request.auth.user)
         game = Game.objects.get(pk=request.data["game"])
+        gamer = Gamer.objects.get(user=request.auth.user)
         event = Event.objects.create(
             description=request.data["description"],
             date=request.data["date"],
