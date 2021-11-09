@@ -4,9 +4,11 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from levelupapi.models import Event, EventGamer, event_gamer, Game, Gamer
 from levelupapi.views.game import GameSerializer
+from rest_framework.serializers import ModelSerializer, BooleanField, CharField
 from rest_framework import status
 from django.core.exceptions import ValidationError
 from rest_framework.decorators import action
+from django.contrib.auth.models import User
 
 
 class EventView(ViewSet):
@@ -15,6 +17,8 @@ class EventView(ViewSet):
         events = Event.objects.all()
         game = self.request.query_params.get("game", None)
         gamer = Gamer.objects.get(user=request.auth.user)
+        for event in events:
+            event.joined = gamer in event.attendees.all()
         if game is not None:
             events = events.filter(game__id=game)
 
@@ -92,7 +96,6 @@ def update(self, request, pk)
                 return Response({'message': ex.args[0]})
 
 
-
 class EventGamerSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -102,8 +105,9 @@ class EventGamerSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     organizer = EventGamerSerializer()
     game = GameSerializer()
+    joined = serializers.BooleanField(required=False)
 
 
     class Meta:
         model = Event
-        fields = ("id", "game", "organizer", "description", "date", "time")
+        fields = ("id", "game", "organizer", "description", "date", "time", "joined")
