@@ -1,7 +1,9 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from levelupapi.models import Gamer
+from levelupapi.models import Gamer, Event, Game
+from rest_framework import serializers
+from django.contrib.auth.models import User
 
 
 @api_view(['GET'])
@@ -14,26 +16,27 @@ def user_profile(request):
     gamer = Gamer.objects.get(user=request.auth.user)
 
     # TODO: Use the django orm to filter events if the gamer is attending the event
-    # attending =
+    #attending = Event.objects.filter(attendees=gamer)
+    #or
+    attending = gamer.attending.all()
 
     # TODO: Use the orm to filter events if the gamer is hosting the event
-    # hosting =
+    #hosting = Event.objects.filter(organizer=gamer)
+    #or
+    hosting = gamer.event_set
 
-    attending = EventSerializer(
-        attending, many=True, context={'request': request})
-    hosting = EventSerializer(
-        hosting, many=True, context={'request': request})
-    gamer = GamerSerializer(
-        gamer, many=False, context={'request': request})
+    attending_serialized = EventSerializer(attending, many=True, context={'request': request})
+    hosting_serialized = EventSerializer(hosting, many=True, context={'request': request})
+    gamer_serialized = GamerSerializer(gamer)
 
     # Manually construct the JSON structure you want in the response
-    profile = {
-        "gamer": gamer.data,
-        "attending": attending.data,
-        "hosting": hosting.data
+    response = {
+        "gamer": gamer_serialized.data,
+        "attending": attending_serialized.data,
+        "hosting": hosting_serialized.data
     }
 
-    return Response(profile)
+    return Response(response)
 
 
 class UserSerializer(serializers.ModelSerializer):

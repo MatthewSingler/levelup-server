@@ -4,6 +4,7 @@ from django.conf.urls import include
 from django.urls import path
 from levelupapi.views import register_user, login_user
 from levelupapi.views import GameTypeView, GameView, EventView
+from levelupapi.views.profile import user_profile
 
 
 router = routers.DefaultRouter(trailing_slash=False)
