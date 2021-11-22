@@ -29,3 +29,21 @@ class EventTests(APITestCase):
         event = Event()
         event.game = "Test game"
         event.save()
+
+    def test_create_event(self):
+        url = "/events"
+        event = {
+            "game": "Mouse Trap",
+            "description": "Dont get caught",
+            "date": "2021-12-01",
+            "time": "12:00:00",
+            "organizer": "Gamer?"
+        }
+        response = self.client.post(url, event, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["gamer"]['user'], self.token.user_id)
+        self.assertEqual(response.data["game"], event['game'])
+        self.assertEqual(response.data["description"], event['description'])
+        self.assertEqual(response.data["date"], event['date'])
+        self.assertEqual(response.data["time"], event['time'])
+        self.assertEqual(response.data["organizer"]['id'], event['organizer'])
