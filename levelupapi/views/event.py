@@ -44,23 +44,25 @@ class EventView(ViewSet):
         except ValidationError as ex:
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
-    """def retrieve(self, request, pk=None)
-    event = Event.objects.get(pk=pk)
-    event_serializer = EventSerializer(event, context={"request": request})
-    return Response(event_serializer.data)
+    def retrieve(self, request, pk)
+        try:
+            event = Event.objects.get(pk=pk)
+            event_serializer = EventSerializer(event, context={"request": request})
+            return Response(event_serializer.data)
+        except Event.DoesNotExist as ex:
+            return Response({'message', 'event not found'}, status=status.HTTP_404_NOT_FOUND)
 
-def destroy(self, request, pk)
-    event = Event.objects.get(pk=pk)
-    event.delete()
+    def destroy(self, request, pk)
+        event = Event.objects.get(pk=pk)
+        event.delete()
 
-def update(self, request, pk)
-    event = Event.objects.get(pk=pk)
-    event.date = request.data["date"]
-    """
+    def update(self, request, pk)
+        event = Event.objects.get(pk=pk)
+        event.date = request.data["date"]
 
 
     @action(methods=['post', 'delete'], detail=True)
-    def signup(self, request, pk=None):
+        def signup(self, request, pk=None):
         """Managing gamers signing up for events"""
         # Django uses the `Authorization` header to determine
         # which user is making the request to sign up
@@ -100,7 +102,7 @@ class EventGamerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gamer
-        fields = ("user", "bio")
+        fields = ("user", "id")
 
 class EventSerializer(serializers.ModelSerializer):
     organizer = EventGamerSerializer()
